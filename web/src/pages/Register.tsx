@@ -2,8 +2,6 @@ import React, { ReactElement, useRef, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useRegisterMutation } from "../generated/graphql";
 
-interface Props {}
-
 export default function Register({
   history,
 }: RouteComponentProps): ReactElement {

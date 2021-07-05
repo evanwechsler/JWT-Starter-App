@@ -1,6 +1,7 @@
 import React, { ReactElement, useRef, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useLoginMutation } from "../generated/graphql";
+import { setAccessToken } from "../accessToken";
+import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
 
 export default function Login({ history }: RouteComponentProps): ReactElement {
   const [error, setError] = useState("");
@@ -24,8 +25,23 @@ export default function Login({ history }: RouteComponentProps): ReactElement {
         email,
         password,
       },
+      update: (store, { data }) => {
+        if (!data) {
+          return null;
+        }
+        store.writeQuery<MeQuery>({
+          query: MeDocument,
+          data: {
+            __typename: "Query",
+            me: data.login.user,
+          },
+        });
+      },
     });
     console.log(response);
+    if (response && response.data) {
+      setAccessToken(response.data.login.accessToken);
+    }
     history.push("/");
   };
   return (
