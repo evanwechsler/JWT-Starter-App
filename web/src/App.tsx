@@ -4,6 +4,8 @@ import Routes from "./components/Routes";
 
 export default function App(): ReactElement {
   const [loading, setLoading] = useState(true);
+
+  // Refresh tokens on entering app
   useEffect(() => {
     const abortController = new AbortController();
     const refreshToken = async () => {

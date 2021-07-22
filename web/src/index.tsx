@@ -18,15 +18,6 @@ import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
 import "./styles/index.scss";
 
-(async () => {
-  const response = await fetch("http://localhost:4000/refresh_token", {
-    method: "POST",
-    credentials: "include",
-  });
-  const { accessToken } = await response.json();
-  setAccessToken(accessToken);
-})();
-
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
   credentials: "include",
@@ -43,6 +34,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
+// Set authentication header if logged in
 const requestLink = new ApolloLink(
   (operation, forward) =>
     new Observable((observer) => {
