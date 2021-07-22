@@ -1,0 +1,57 @@
+import React, { useEffect, useReducer, useState } from "react";
+import { setAccessToken } from "../accessToken";
+import {
+  AuthenticateDocument,
+  AuthenticateQuery,
+  useAuthenticateQuery,
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+} from "../generated/graphql";
+import { ActionType, AuthReducer, AuthState, initialState } from "./reducer";
+export interface User {
+  email: string;
+  id: number;
+}
+
+type AuthUpdateContextType = {
+  signIn: (email: string, password: string) => Promise<any>;
+  signUp: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+};
+
+const AuthContext = React.createContext<AuthState | undefined>(undefined);
+const AuthUpdateContext = React.createContext<
+  React.Dispatch<ActionType> | undefined
+>(undefined);
+
+export function useAuth() {
+  const context = React.useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuthState must be used within a AuthProvider");
+  }
+
+  return context;
+}
+
+export function useAuthDispatch() {
+  const context = React.useContext(AuthUpdateContext);
+  if (context === undefined) {
+    throw new Error("useAuthDispatch must be used within a AuthProvider");
+  }
+
+  return context;
+}
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, dispatch] = useReducer(AuthReducer, initialState);
+
+  return (
+    <AuthContext.Provider value={user}>
+      <AuthUpdateContext.Provider value={dispatch}>
+        {children}
+      </AuthUpdateContext.Provider>
+    </AuthContext.Provider>
+  );
+};

@@ -1,0 +1,39 @@
+@mixin center {
+    display: grid;
+    place-items: center;
+}
+
+@mixin flex($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin card($bgColor: "white", $borderRadius: "8px", $withShadow: true) {
+    @include center;
+    width: clamp(300px, 80%, 700px);
+    text-align: center;
+    margin: auto;
+    background-color: $bgColor;
+    border-radius: $borderRadius;
+    @if $withShadow {
+        box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    }
+}
+
+@mixin button( $spacing, $height, $fontSize, $bgColor, $fontColor, $borderRadius, $width) {
+    margin: $spacing auto;
+    height: $height;
+    font-size: $fontSize;
+    background-color: $colorAccent;
+    border: none;
+    border-radius: $borderRadius;
+    width: $width;
+    color: white;
+    transition: filter 300ms;
+    &:hover {
+        filter: brightness(0.85);
+        cursor: pointer;
+    }
+}

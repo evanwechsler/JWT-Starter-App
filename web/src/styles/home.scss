@@ -1,0 +1,11 @@
+@import "./globalMixins.scss";
+@import "./globalVars.scss";
+div.home {
+    width: min(60%, 40em);
+    display: grid;
+    grid-auto-flow: column;
+    a {
+        @include button(0, auto, 18, $colorAccent, white, 5px, fit-content);
+        padding: 2em;
+    }
+}

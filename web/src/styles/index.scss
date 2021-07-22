@@ -1,0 +1,32 @@
+@import "./navbar.scss";
+@import "./globalMixins.scss";
+@import "./globalVars.scss";
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    background-color: $bgColor;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.container {
+    &.center {
+        width: 100%;
+        height: 100vh;
+        @include center;
+    }
+}

@@ -1,0 +1,41 @@
+@import "./globalMixins.scss";
+$navSize: 60px;
+$navBg: hsl(0, 0%, 83%);
+$navBgAccent: hsl(0, 0%, 73%);
+$navBorder: 2px solid hsl(0, 0%, 90%);
+$navTextColor: black;
+.navbar {
+    height: $navSize;
+    background-color: $navBg;
+    border-bottom: $navBorder;
+    padding: 0 1rem;
+    .navbar-nav {
+        max-width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        .nav-item {
+            @include center;
+            .icon-link {
+                width: $navSize * 0.8;
+                $buttonSize: $navSize * 0.5;
+                width: $buttonSize;
+                height: $buttonSize;
+                background-color: $navBgAccent;
+                border-radius: 50%;
+                padding: 5px;
+                margin: 2px;
+                @include center;
+                transition: filter 300ms;
+                &:hover {
+                    filter: brightness(1.2);
+                }
+                svg {
+                    fill: $navTextColor;
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+}

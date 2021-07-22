@@ -21,7 +21,7 @@ import { sendRefreshToken } from "./sendRefreshToken";
       credentials: true,
     })
   );
-  app.use(cookieParser());
+  app.use("/refresh_token", cookieParser());
   app.get("/", (_, res) => res.send("hello"));
 
   app.post("/refresh_token", async (req, res) => {

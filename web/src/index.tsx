@@ -2,20 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {
   ApolloClient,
-  InMemoryCache,
+  NormalizedCacheObject,
   HttpLink,
   ApolloLink,
   Observable,
   from,
   ApolloProvider,
+  gql,
 } from "@apollo/client";
+import { cache } from "./cache";
 import { onError } from "@apollo/client/link/error";
 import { AccessToken, getAccessToken, setAccessToken } from "./accessToken";
 import App from "./App";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
+import "./styles/index.scss";
 
-const cache = new InMemoryCache();
+(async () => {
+  const response = await fetch("http://localhost:4000/refresh_token", {
+    method: "POST",
+    credentials: "include",
+  });
+  const { accessToken } = await response.json();
+  setAccessToken(accessToken);
+})();
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -98,9 +108,16 @@ const tokenRefreshLink = new TokenRefreshLink({
   },
 });
 
-const client = new ApolloClient({
-  link: from([tokenRefreshLink, errorLink, requestLink, httpLink]),
+export const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+  }
+`;
+
+const client = new ApolloClient<NormalizedCacheObject>({
+  link: from([tokenRefreshLink, requestLink, errorLink, httpLink]),
   cache,
+  typeDefs,
 });
 
 ReactDOM.render(

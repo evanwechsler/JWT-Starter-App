@@ -1,0 +1,79 @@
+import React, { useReducer } from "react";
+import { getAccessToken } from "../accessToken";
+import { User } from "./context";
+
+let user = localStorage.getItem("currentUser")
+  ? JSON.parse(localStorage.getItem("currentUser")!)
+  : "";
+
+export interface AuthState {
+  user: User | string;
+  loading: boolean;
+  errorMessage: any;
+}
+
+export const initialState: AuthState = {
+  user,
+  loading: false,
+  errorMessage: null,
+};
+
+export const AUTH_ACTIONS = {
+  requestLogin: "REQUEST_LOGIN",
+  loginSuccess: "LOGIN_SUCCESS",
+  signUpSuccess: "SIGNUP_SUCCESS",
+  logout: "LOGOUT",
+  loginError: "LOGIN_ERROR",
+};
+
+interface Payload {
+  user: User;
+}
+
+export interface ActionType {
+  type: string;
+  payload?: Payload;
+  error?: any;
+}
+
+export const AuthReducer = (
+  initialState: AuthState,
+  action: ActionType
+): AuthState => {
+  switch (action.type) {
+    case AUTH_ACTIONS.requestLogin:
+      return {
+        ...initialState,
+        loading: true,
+      };
+    case AUTH_ACTIONS.loginSuccess:
+      if (action.payload) {
+        return {
+          ...initialState,
+          user: action.payload.user,
+          loading: false,
+        };
+      } else {
+        throw new Error("You must pass in a payload on successful login");
+      }
+    case AUTH_ACTIONS.logout:
+      return {
+        ...initialState,
+        user: "",
+      };
+    case AUTH_ACTIONS.loginError:
+      return {
+        ...initialState,
+        loading: false,
+        errorMessage:
+          action.error ?? "No error message provided for bad login.",
+      };
+    case AUTH_ACTIONS.signUpSuccess:
+      return {
+        ...initialState,
+        loading: false,
+      };
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+};

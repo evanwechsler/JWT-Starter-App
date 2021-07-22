@@ -1,0 +1,5 @@
+@import "./globalMixins.scss";
+@import "./globalVars.scss";
+button {
+    @include button(1em, 3em, 14px, $colorAccent, white, 5px, fit-content);
+}

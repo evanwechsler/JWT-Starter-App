@@ -1,0 +1,101 @@
+import React from "react";
+import { setAccessToken } from "../accessToken";
+import {
+  AuthenticateDocument,
+  AuthenticateQuery,
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+} from "../generated/graphql";
+import { User } from "./context";
+import { ActionType, AUTH_ACTIONS } from "./reducer";
+
+const [login] = useLoginMutation();
+const [register] = useRegisterMutation();
+const [logout, { client }] = useLogoutMutation();
+
+export const loginUser = async (
+  dispatch: React.Dispatch<ActionType>,
+  loginPayload: { email: string; password: string }
+): Promise<{ user: User } | null> => {
+  const { email, password } = loginPayload;
+  try {
+    dispatch({ type: AUTH_ACTIONS.requestLogin });
+    const response = await login({
+      variables: {
+        email,
+        password,
+      },
+      update: (store, { data }) => {
+        if (!data) {
+          return null;
+        }
+        store.writeQuery<AuthenticateQuery>({
+          query: AuthenticateDocument,
+          data: {
+            __typename: "Query",
+            authenticate: data.login.user,
+          },
+        });
+      },
+    });
+    console.log(response);
+    if (response?.data) {
+      const user = {
+        email: response.data.login.user.email,
+        id: response.data.login.user.id,
+      };
+      const data = {
+        user,
+      };
+      setAccessToken(response.data.login.accessToken);
+      dispatch({ type: AUTH_ACTIONS.loginSuccess, payload: data });
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      return data;
+    }
+    const error = response.errors
+      ? response.errors[0]
+      : new Error("An error occurred during login");
+    dispatch({ type: AUTH_ACTIONS.loginError, error });
+    return null;
+  } catch (error) {
+    dispatch({ type: AUTH_ACTIONS.loginError, error });
+    return null;
+  }
+};
+
+export const signUp = async (
+  dispatch: React.Dispatch<ActionType>,
+  singUpPayload: { email: string; password: string }
+): Promise<boolean> => {
+  const { email, password } = singUpPayload;
+  try {
+    dispatch({ type: AUTH_ACTIONS.requestLogin });
+    const response = await register({
+      variables: {
+        email,
+        password,
+      },
+    });
+    if (response.data?.register) {
+      dispatch({ type: AUTH_ACTIONS.signUpSuccess });
+      return true;
+    }
+    const error = response.errors
+      ? response.errors[0]
+      : new Error("An error occurred during signup");
+    dispatch({ type: AUTH_ACTIONS.loginError, error });
+    return false;
+  } catch (error) {
+    dispatch({ type: AUTH_ACTIONS.loginError, error });
+    return false;
+  }
+};
+
+export const logoutUser = async (dispatch: React.Dispatch<ActionType>) => {
+  dispatch({ type: AUTH_ACTIONS.logout });
+  await logout();
+  setAccessToken("");
+  localStorage.removeItem("currentUser");
+  await client!.cache.reset();
+};

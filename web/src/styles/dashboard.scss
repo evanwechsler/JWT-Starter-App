@@ -1,0 +1,7 @@
+@import "./globalMixins.scss";
+$bgColor: white;
+$borderRadius: 8px;
+.card {
+    @include card($bgColor, $borderRadius);
+    height: 60%;
+}

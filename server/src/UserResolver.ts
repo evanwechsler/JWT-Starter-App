@@ -46,6 +46,7 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
+  @UseMiddleware(isAuth)
   me(@Ctx() context: MyContext) {
     const authorization = context.req.headers["authorization"];
     if (!authorization) {
@@ -54,7 +55,6 @@ export class UserResolver {
     try {
       const token = authorization.split(" ")[1];
       const payload: any = verify(token, jwtConfig.accessSecret);
-      context.payload = payload as any;
       return User.findOne(payload.userId);
     } catch (err) {
       console.log(err);
@@ -117,7 +117,6 @@ export class UserResolver {
         password: hashedPassword,
       });
     } catch (error) {
-      console.log(error);
       return false;
     }
     return true;

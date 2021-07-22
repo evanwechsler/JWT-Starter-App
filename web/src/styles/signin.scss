@@ -1,0 +1,127 @@
+@import "./globalMixins.scss";
+@import "./globalVars.scss";
+$fontSize: 16px;
+$inputBorder: 1px solid #dddfee;
+$focusBorder: 2px solid $colorAccent;
+$formBgColor: white;
+$borderRadius: 8px;
+$contentWidth: 90%;
+$size: 3em;
+$fieldSpacing: 1em;
+* {
+    box-sizing: border-box;
+}
+
+@mixin input {
+    border-radius: $borderRadius;
+    font-size: $fontSize;
+    padding: 0 1em;
+    margin-top: $fieldSpacing;
+    border: $inputBorder;
+    width: $contentWidth;
+    height: $size;
+    &:focus {
+        border: $focusBorder;
+        outline: none;
+    }
+}
+
+input.text {
+    @include input;
+}
+
+form {
+    width: 100%;
+    @include flex(column);
+}
+
+h1 {
+    color: $colorAccent;
+}
+
+button {
+    @include button( $fieldSpacing, $size, $fontSize, $colorAccent, white, $borderRadius, $contentWidth);
+    &#create-account {
+        width: fit-content;
+        padding: 0 1em;
+        margin-bottom: 1em;
+        background-color: $alternateColor;
+    }
+}
+
+.hr {
+    height: 0;
+    width: $contentWidth;
+    border-bottom: $inputBorder;
+}
+
+.error {
+    $color: hsl(0, 100%, 62%);
+    $backgroundColor: hsl(0, 100%, 95%);
+    color: $color;
+    background-color: $backgroundColor;
+    border-radius: 10px;
+    padding: 0.5em;
+    width: $contentWidth;
+    border: 1px solid lighten($color, 20%);
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    input {
+        flex-grow: 1;
+    }
+    width: $contentWidth;
+    input:first-child {
+        margin-right: $fieldSpacing / 2;
+    }
+    input:last-child {
+        margin-left: $fieldSpacing / 2;
+    }
+}
+
+a {
+    color: $colorAccent;
+    font-weight: 600;
+    margin-bottom: $fieldSpacing;
+    &:visited {
+        color: $colorAccent;
+    }
+}
+
+.password {
+    @include input;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    >input {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        flex-grow: 1;
+        border: none;
+        font-size: inherit;
+        &:focus {
+            outline: none;
+        }
+    }
+    >.eye {
+        border-radius: 50%;
+        height: 1.5em;
+        width: 1.5em;
+        @include center;
+        &:hover {
+            background-color: hsl(0, 0%, 80%);
+        }
+    }
+    &:focus-within {
+        border: $focusBorder;
+    }
+}
+
+.card {
+    @include card($formBgColor, $borderRadius, true);
+    height: auto;
+}
