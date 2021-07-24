@@ -15,7 +15,7 @@ export default function DotSpinner({ color, size }: Props): ReactElement {
       dot.style.width = size ?? "14px";
       dot.style.height = size ?? "14px";
     }
-  }, []);
+  }, [color, size]);
 
   return (
     <div className="spinner">

@@ -1,9 +1,4 @@
 // Type declarations
-interface Options {
-  strengthLevel?: number;
-  minLength?: number;
-  maxLength?: number;
-}
 
 export interface PasswordLevels {
   length?: boolean;

@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLoginMutation } from "../generated/graphql";
 import "../styles/signin.scss";
@@ -9,8 +9,6 @@ import { loginOptions, loginUser } from "../auth";
 
 export default function Login(): ReactElement {
   const history = useHistory<LocationState>();
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

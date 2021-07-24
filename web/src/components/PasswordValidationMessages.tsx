@@ -21,7 +21,7 @@ export default function PasswordValidationMessages({
         const validatedKey = key as keyof typeof validated;
         const isValid = validated[validatedKey];
         return (
-          <div className={isValid ? "valid" : "invalid"}>
+          <div key={messageKey} className={isValid ? "valid" : "invalid"}>
             {isValid ? <BiCheckCircle /> : <BiXCircle />}
             {messages[messageKey]}
           </div>

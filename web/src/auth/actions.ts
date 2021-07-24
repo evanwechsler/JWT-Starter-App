@@ -13,7 +13,6 @@ import {
 import { ApolloError, ApolloClient } from "@apollo/client";
 import { History, LocationState } from "history";
 import { MutationFunctionOptions, FetchResult } from "@apollo/client";
-import Isemail from "isemail";
 
 export const signUpUser = async (
   register: (
