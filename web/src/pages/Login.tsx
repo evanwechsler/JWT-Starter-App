@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLoginMutation } from "../generated/graphql";
 import "../styles/signin.scss";
@@ -11,17 +11,19 @@ export default function Login(): ReactElement {
   const history = useHistory<LocationState>();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [login, { loading, error }] = useLoginMutation(loginOptions(history));
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (emailRef.current && passwordRef.current) {
-      const email = emailRef.current.value,
-        password = passwordRef.current.value;
 
-      const response = await loginUser(login, email, password);
-      console.log(response);
-    }
+    const response = await loginUser(login, email, password);
+    console.log(response);
+  };
+
+  const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
   };
 
   return (
@@ -34,10 +36,14 @@ export default function Login(): ReactElement {
             className="text"
             placeholder="Email"
             type="email"
-            ref={emailRef}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <PasswordInput placeholder="Password" ref={passwordRef} required />
+          <PasswordInput
+            placeholder="Password"
+            onChange={handlePasswordChange}
+            required
+          />
           <button type="submit" disabled={loading}>
             {loading ? <DotSpinner color="white" size="14px" /> : "Login"}
           </button>

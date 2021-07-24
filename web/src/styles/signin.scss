@@ -125,3 +125,25 @@ a {
     @include card($formBgColor, $borderRadius, true);
     height: auto;
 }
+
+.password-messages {
+    text-align: left;
+    width: $contentWidth;
+    margin: $fieldSpacing;
+    padding-left: 1em;
+    .valid {
+        svg {
+            color: #2cc7de;
+        }
+    }
+    .invalid {
+        color: #f10ebc;
+    }
+    >div {
+        display: flex;
+        align-items: center;
+        svg {
+            margin-right: 0.3em;
+        }
+    }
+}

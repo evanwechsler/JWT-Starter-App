@@ -7,11 +7,42 @@ import {
   LogoutMutation,
   MeDocument,
   MeQuery,
+  RegisterMutation,
   User,
 } from "../generated/graphql";
 import { ApolloError, ApolloClient } from "@apollo/client";
 import { History, LocationState } from "history";
 import { MutationFunctionOptions, FetchResult } from "@apollo/client";
+import Isemail from "isemail";
+
+export const signUpUser = async (
+  register: (
+    options?:
+      | MutationFunctionOptions<
+          RegisterMutation,
+          Exact<{
+            email: string;
+            password: string;
+          }>
+        >
+      | undefined
+  ) => Promise<FetchResult<RegisterMutation, Record<"register", Boolean>>>,
+  email: string,
+  password: string
+): Promise<boolean> => {
+  let registered = false;
+  const registrationResponse = await register({
+    variables: {
+      email,
+      password,
+    },
+  });
+  console.log(registrationResponse);
+
+  registered = registrationResponse.data?.register ?? false;
+
+  return registered;
+};
 
 export const loginOptions = (history: History<LocationState>) => ({
   onCompleted({
