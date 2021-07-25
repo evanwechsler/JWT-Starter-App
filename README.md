@@ -8,6 +8,8 @@ Code: https://github.com/benawad/jwt-auth-example
 My goal with this project was have a fully functioning authentication app that I can clone in the future to jumpstart new projects.
 Ben Awad's tutorial helped me learn how to assign and manage JWT tokens as well as gave me an introduction to graphql. I also implemented a nicer UI so I can start with an out of the box, good looking login and sign up page. Admitidly, I may have take some inspiration from Facebook's UI...
 
+Feel free to use this project, provide me with suggestions or make a PR to imrpove this project.
+
 To get started:
 1. Clone the project
 2. cd into the root directory and run `yarn install`
