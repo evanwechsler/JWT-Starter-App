@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 interface Props extends React.HTMLProps<HTMLInputElement> {
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function PasswordInput({ onChange, ...rest }: Props) {

@@ -31,7 +31,7 @@ export default function SignUpPasswordField({
     messages,
   });
 
-  const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const curPassword = e.currentTarget.value;
     const curPasswordValidation =
       passwordValidator.validatePassword(curPassword);

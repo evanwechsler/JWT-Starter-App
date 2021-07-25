@@ -21,7 +21,6 @@ export default function AppRoute({
   exact,
 }: Props): ReactElement {
   const { data } = useQuery(IS_LOGGED_IN);
-  console.log(data);
 
   return (
     <Route

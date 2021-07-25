@@ -1,16 +1,18 @@
 import React, { ReactElement, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import DotSpinner from "../components/DotSpinner";
 import { useLoginMutation, useRegisterMutation } from "../generated/graphql";
 import "../styles/signin.scss";
 import { loginOptions, loginUser, signUpUser } from "../auth";
 import Isemail from "isemail";
 import SignUpPasswordField from "../components/SignUpPasswordField";
+import LoadingButton from "../components/LoadingButton";
+import PasswordConfirmationField from "../components/PasswordConfirmationField";
 
 export default function SignUp(): ReactElement {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState({ value: "", valid: false });
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [error, setError] = useState("");
 
   const [register, { loading: loadingSignUp, error: signUpError }] =
@@ -21,8 +23,9 @@ export default function SignUp(): ReactElement {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setError("");
     e.preventDefault();
+    console.log(passwordsMatch);
 
-    const isValidEmail = Isemail.validate(email, { errorLevel: false });
+    const isValidEmail = Isemail.validate(email);
     if (!isValidEmail) {
       setError("Please enter a valid email address");
       return;
@@ -30,6 +33,11 @@ export default function SignUp(): ReactElement {
 
     if (!password.valid) {
       setError("Please enter a valid password");
+      return;
+    }
+
+    if (!passwordsMatch) {
+      setError("The passwords entered do not match");
       return;
     }
     let response: any = await signUpUser(register, email, password.value);
@@ -59,13 +67,15 @@ export default function SignUp(): ReactElement {
             required
           />
           <SignUpPasswordField setPassword={setPassword} />
-          <button type="submit" disabled={loadingSignUp || loadingLogin}>
-            {loadingSignUp || loadingLogin ? (
-              <DotSpinner color="white" size="14px" />
-            ) : (
-              "Sign Up"
-            )}
-          </button>
+          <PasswordConfirmationField
+            password={password.value}
+            setPasswordsMatch={setPasswordsMatch}
+          />
+          <LoadingButton
+            text="Sign Up"
+            loading={loadingLogin || loadingSignUp}
+            type="submit"
+          />
         </form>
         <Link to="/login">Already have an account?</Link>
       </div>

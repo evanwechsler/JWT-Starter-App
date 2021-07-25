@@ -8,6 +8,8 @@ $borderRadius: 8px;
 $contentWidth: 90%;
 $size: 3em;
 $fieldSpacing: 1em;
+$invalidColor: #f10ebc;
+$validColor: #2cc7de;
 * {
     box-sizing: border-box;
 }
@@ -56,14 +58,13 @@ button {
 }
 
 .error {
-    $color: hsl(0, 100%, 62%);
-    $backgroundColor: hsl(0, 100%, 95%);
-    color: $color;
+    $backgroundColor: lighten($invalidColor, 60%);
+    color: $invalidColor;
     background-color: $backgroundColor;
     border-radius: 10px;
     padding: 0.5em;
     width: $contentWidth;
-    border: 1px solid lighten($color, 20%);
+    border: 1px solid lighten($invalidColor, 20%);
 }
 
 .flex-row {
@@ -133,11 +134,11 @@ a {
     padding-left: 1em;
     .valid {
         svg {
-            color: #2cc7de;
+            color: $validColor;
         }
     }
     .invalid {
-        color: #f10ebc;
+        color: $invalidColor;
     }
     >div {
         display: flex;
@@ -145,5 +146,17 @@ a {
         svg {
             margin-right: 0.3em;
         }
+    }
+}
+
+.password-confirmation-message {
+    width: $contentWidth;
+    display: flex;
+    align-items: center;
+    color: $invalidColor;
+    margin: $fieldSpacing;
+    padding-left: 1em;
+    svg {
+        margin-right: 0.3em;
     }
 }
