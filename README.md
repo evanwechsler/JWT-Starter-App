@@ -1,4 +1,14 @@
 # Boiler Plate Authentication App
+#### Table of Contents
+[Intro](#intro)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Get Started](#get-started)<br>
+[Tech Stack](#tech-stack)<br>
+[Features](#features)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Authentication](#authentication)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Password Validation](#password-validation)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Persisted Authentication](#persisted-authentication)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Protected Routed](#protected-routes)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Page not Found](#page-not-found)
 # Intro
 This project is heavily based off of Ben Awads JWT authentication tutorial.
 
@@ -10,7 +20,7 @@ Ben Awad's tutorial helped me learn how to assign and manage JWT tokens as well 
 
 Feel free to use this project, provide me with suggestions or make a PR to imrpove this project.
 
-To get started:
+## Get Started
 1. Clone the project
 2. cd into the root directory and run `yarn install`
 3. Make sure you have postgres installed on your local machine
@@ -60,7 +70,7 @@ DB_NAME="name of database"
  * Sign Up demo:
  ![Sign Up demo](https://github.com/evanwechsler/JWT-Starter-App/blob/master/documentation/assets/sign-in.gif)
  
-## Persited Authentication
+## Persisted Authentication
  * After logging in, authentication is persisted over multiple session until refresh token expires or the user logs out.
  * Login demo:
  ![Login demo](https://github.com/evanwechsler/JWT-Starter-App/blob/master/documentation/assets/login.gif)
