@@ -24,7 +24,7 @@ Feel free to use this project, provide me with suggestions or make a PR to imrpo
 1. Clone the project
 2. cd into the root directory and run `yarn install`
 3. Make sure you have postgres installed on your local machine
-4. Create a .env file in the root directory and add the following environment variables
+4. Create a .env file in the server directory and add the following environment variables
 ```
 ACCESS_TOKEN_SECRET="your access token secret"
 REFRESH_TOKEN_SECRET="your refresh token secret"
