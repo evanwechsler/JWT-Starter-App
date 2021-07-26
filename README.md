@@ -10,7 +10,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;[Protected Routed](#protected-routes)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Page not Found](#page-not-found)
 # Intro
-This project is heavily based off of Ben Awads JWT authentication tutorial.
+This project is based off of Ben Awads JWT authentication tutorial.
 
 Code: https://github.com/benawad/jwt-auth-example
 ***
