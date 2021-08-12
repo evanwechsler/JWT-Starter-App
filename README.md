@@ -20,7 +20,7 @@ Code: https://github.com/benawad/jwt-auth-example
 
 ---
 
-My goal with this project was have a fully functioning authentication app that I can clone in the future to jumpstart new projects.
+My goal with this project was have a fully functioning authentication app that I can clone in the future to jump start new projects.
 Ben Awad's tutorial helped me learn how to assign and manage JWT tokens as well as gave me an introduction to graphql. I also implemented a nicer UI so I can start with an out of the box, good looking login and sign up page. Admittedly, I may have take some inspiration from Facebook's UI...
 
 Feel free to use this project, provide me with suggestions or make a PR to improve this project.
